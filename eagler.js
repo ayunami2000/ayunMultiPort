@@ -31,6 +31,7 @@ throughDirectory(prefix);
 
 const httpsrv = require("http").createServer((req,res)=>{
   let url = req.url;
+  if (url.includes("?")) url = url.slice(0, url.indexOf("?"));
   if(url.startsWith("/"))url=url.slice(1);
   if(url=="")url = "index.html";
   if(files.includes(url)){
