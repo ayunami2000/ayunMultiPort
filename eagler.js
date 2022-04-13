@@ -48,6 +48,8 @@ const httpsrv = require("http").createServer((req,res)=>{
 const wss = new WebSocketServer({ server: httpsrv });
 
 wss.on('connection', function(ws) {
+  ws.on('error', function(er) {});
+  
   let client = null;
   makeWsMcClient(ws,c=>client=c);
   
