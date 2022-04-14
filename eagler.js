@@ -1,20 +1,34 @@
 const Net = require('net');
-const listenPort = 25565;
-const mcHost = "localhost";
-const mcPort = 25569;
-const httpPort = 8080;
-const timeout = 10000;
-const changeProtocol = true;
-const removeSkin = true;
-
 const { WebSocketServer, WebSocket } = require('ws');
-
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime-types");
 const bufferReplace = require('buffer-replace');
+const crypto = require('crypto');
+const Jimp = require('jimp');
 
+const listenPort = 25565;
+const mcHost = "localhost";
+const mcPort = 25569;
+const serverName = "ayunMultiPort Server";
+const serverMotd = "line1\nline2";
+const serverMaxPlayers = 20;
+const serverOnlinePlayers = 4;
+const serverPlayers = ["Welcome to my", "ayunMultiPort-powered", "Eaglercraft server!"];
+const serverIcon = fs.readFileSync("icon.png"); // set to null for no icon. MUST be 64x64.
+const httpPort = 8080;
+const timeout = 10000;
+const changeProtocol = true;
+const removeSkin = true;
 const prefix = "www";
+
+let iconBuff = null;
+
+if(serverIcon!=null){
+  Jimp.read(serverIcon, function (err, image) {
+    if(!err)iconBuff=Buffer.from(image.bitmap.data);
+  });
+}
 
 let files = [];
 let cache = {};
@@ -45,7 +59,14 @@ const httpsrv = require("http").createServer((req,res)=>{
     res.end("404 Not Found");
   }
 });
+
 const wss = new WebSocketServer({ server: httpsrv });
+
+const motdBase = {data:{motd:serverMotd.split("\n"),cache:true,max:serverMaxPlayers,players:serverPlayers,icon:serverIcon!=null,online:serverOnlinePlayers},vers:"0.2.0",name:serverName,time:0,type:"motd",brand:"Eagtek",uuid:crypto.randomUUID(),cracked:true};
+function getMotd(){
+  motdBase.time = Date.now();
+  return JSON.stringify(motdBase);
+}
 
 wss.on('connection', function(ws) {
   ws.on('error', function(er) {});
@@ -58,6 +79,12 @@ wss.on('connection', function(ws) {
   ws.on('message', function(data) {
     if(msgNum==0){
       msgNum++;
+      if(data.toString()=="Accept: MOTD"){
+        ws.send(getMotd());
+        if(serverIcon!=null)ws.send(iconBuff);
+        closeIt();
+        return;
+      }
       if(changeProtocol)data=bufferReplace(data,Buffer.from("0245","hex"),Buffer.from("023d","hex"));
     }else if(msgNum==1){
       msgNum++;
