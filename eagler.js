@@ -11,7 +11,7 @@ const listenPort = 25565;
 const mcHost = "localhost";
 const mcPort = 25569;
 const serverName = "ayunMultiPort Server";
-const serverMotd = "line1\nline2";
+const serverMotd = ["line1", "line2"];
 const serverMaxPlayers = 20;
 const serverOnlinePlayers = 4;
 const serverPlayers = ["Welcome to my", "ayunMultiPort-powered", "Eaglercraft server!"];
@@ -62,7 +62,7 @@ const httpsrv = require("http").createServer((req,res)=>{
 
 const wss = new WebSocketServer({ server: httpsrv });
 
-const motdBase = {data:{motd:serverMotd.split("\n"),cache:true,max:serverMaxPlayers,players:serverPlayers,icon:serverIcon!=null,online:serverOnlinePlayers},vers:"0.2.0",name:serverName,time:0,type:"motd",brand:"Eagtek",uuid:crypto.randomUUID(),cracked:true};
+const motdBase = {data:{motd:serverMotd,cache:true,max:serverMaxPlayers,players:serverPlayers,icon:serverIcon!=null,online:serverOnlinePlayers},vers:"0.2.0",name:serverName,time:0,type:"motd",brand:"Eagtek",uuid:crypto.randomUUID(),cracked:true};
 function getMotd(){
   motdBase.time = Date.now();
   return JSON.stringify(motdBase);
