@@ -81,7 +81,7 @@ wss.on('connection', function(ws) {
       msgNum++;
       if(data.toString()=="Accept: MOTD"){
         ws.send(getMotd());
-        if(serverIcon!=null)ws.send(iconBuff);
+        if(iconBuff!=null)ws.send(iconBuff);
         closeIt();
         return;
       }
