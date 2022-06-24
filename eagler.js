@@ -70,12 +70,12 @@ function getMotd(){
 
 wss.on('connection', function(ws) {
   ws.on('error', function(er) {});
-  
+
   let client = null;
   makeWsMcClient(ws,c=>client=c);
-  
+
   let msgNum = 0;
-  
+
   ws.on('message', function(data) {
     if(msgNum==0){
       msgNum++;
@@ -92,7 +92,7 @@ wss.on('connection', function(ws) {
     }
     writeData(data);
   });
-  
+
   ws.on('close', function(){
     closeIt();
   });
@@ -110,12 +110,12 @@ wss.on('connection', function(ws) {
     while(client==null&&(Date.now()-i<timeout/10)){
       await new Promise(a=>setTimeout(a,10));
     }
-    
+
     if(client==null){
       if(ws.readyState==WebSocket.OPEN)ws.close();
       return false;
     }
-    
+
     return true;
   }
 });
@@ -129,9 +129,9 @@ server.listen(listenPort, function() {
 
 server.on('connection', function(socket) {
   let client = null;
-  
+
   let determinedClient = false;
-  
+
   socket.on('data', function(chunk) {
     if(!determinedClient){
       let req = chunk.toString();
@@ -142,7 +142,7 @@ server.on('connection', function(socket) {
       }
       determinedClient=true;
     }
-    
+
     writeData(chunk);
   });
 
@@ -167,12 +167,12 @@ server.on('connection', function(socket) {
     while(client==null&&(Date.now()-i<timeout/10)){
       await new Promise(a=>setTimeout(a,10));
     }
-    
+
     if(client==null){
       socket.end();
       return false;
     }
-    
+
     return true;
   }
 });
@@ -182,7 +182,7 @@ function makeClient(host,port,socket,cb){
   client.connect({ port: port, host: host }, function() {
     cb(client);
   });
-      
+
   client.on('end', function() {
     socket.end();
   });
@@ -201,7 +201,7 @@ function makeWsMcClient(ws,cb){
   client.connect({ port: mcPort, host: mcHost }, function() {
     cb(client);
   });
-      
+
   client.on('end', function() {
     if(ws.readyState==WebSocket.OPEN)ws.close();
   });

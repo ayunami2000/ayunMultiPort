@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ayuncraft</title>
-
-<script type="text/javascript" src="jsbn/jsbn.js"></script>
-<script type="text/javascript" src="jsbn/jsbn2.js"></script>
-<script type="text/javascript" src="jsbn/base64.js"></script>
-<script type="text/javascript" src="jsbn/prng4.js"></script>
-<script type="text/javascript" src="jsbn/rng.js"></script>
-<script type="text/javascript" src="jsbn/rsa.js"></script>
-<script type="text/javascript" src="jsbn/rsa2.js"></script>
-
-<script type="text/javascript" src="asn1-parser.js"></script>
-
-<script type="text/javascript" src="music.js"></script>
-
-<script type="text/javascript" src="classes.js?t=updateme11"></script>
+<title>eagler</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Eaglercraft is real Minecraft 1.5.2 that you can play in any regular web browser. That includes school chromebooks, it works on all chromebooks. You can join real Minecraft 1.5.2 servers with it through a custom proxy based on Bungeecord." />
+<meta name="keywords" content="minecraft, applet, chromebook, lax1dude, games, eaglercraft, eagler" />
+<meta name="author" content="LAX1DUDE" />
+<meta property="og:title" content="Eaglercraft" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://media.discordapp.net/attachments/378764518081429506/932053915061587978/thumbnail2.png" />
+<meta property="og:description" content="Eaglercraft is real Minecraft 1.5.2 that you can play in any regular web browser. That includes school chromebooks, it works on all chromebooks. You can join real Minecraft 1.5.2 servers with it through a custom proxy based on Bungeecord." />
+<!-- Change this: <meta property="og:url" content="https://g.eags.us/eaglercraft/" /> -->
+<script type="text/javascript" src="classes.js"></script>
 <script type="text/javascript">
-//window.eag_self_proxy=true;//set to true to set the default proxy to the current url
-//window.eag_proxy_list="";//set to a string of comma-separated proxy ip:port combinations for a custom proxy list
-var name="Minecraft Server",motd="Powered by ayunMultiPort",ip="ws"+window.location.href.slice(4);
+if(document.location.href.startsWith("file:")) {
+alert("You're not supposed to 'open' this file in your browser. Please upload this folder to your HTTP(s) server and access it via the internet. This is not a bug, please read the documentation");
+}else {
 window.addEventListener("load", function(){
-document.requestPointerLock=document.requestPointerLock||function(){};
-document.exitPointerLock=document.exitPointerLock||function(){};
 window.minecraftOpts = [
 "game_frame","assets.epk",
-btoa(atob("CgAACQAHc2VydmVycwoAAAABCAAKZm9yY2VkTU9URABtb3RkaGVyZQEAC2hpZGVBZGRyZXNzAQgAAmlwAGlwaGVyZQgABG5hbWUAbmFtZWhlcmUAAA==").replace("motdhere",String.fromCharCode(motd.length)+motd).replace("namehere",String.fromCharCode(name.length)+name).replace("iphere",String.fromCharCode(ip.length)+ip))
+"CgAACQAHc2VydmVycwoAAAABCAACaXAAIHdzKHMpOi8vIChhZGRyZXNzIGhlcmUpOihwb3J0KSAvCAAEbmFtZQAIdGVtcGxhdGUBAAtoaWRlQWRkcmVzcwEIAApmb3JjZWRNT1REABl0aGlzIGlzIG5vdCBhIHJlYWwgc2VydmVyAAA="
 ];
 (function(){
 var q = window.location.search;
@@ -36,7 +32,7 @@ if(typeof q === 'string' && q.startsWith("?")) {
 }
 })();
 main();
-});
+});}
 </script>
 </head>
 <body style="margin:0px;width:100vw;height:100vh;" id="game_frame">
